@@ -1,0 +1,4 @@
+*.dot
+*.png
+config.json
+venv/
