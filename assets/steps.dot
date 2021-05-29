@@ -1,0 +1,17 @@
+digraph {
+"Do something first" -> "Huge blocker";
+"Last step\ntoward finish";
+"Something" -> "Last step\ntoward finish";
+"Something else" -> "Last step\ntoward finish";
+"do this";
+"[Person1] important stuff";
+"[Person2] important stuff";
+"Pre-requisite" -> "[Person2] important stuff";
+"Pre-requisite" -> "[Person1] important stuff";
+"Pre-requisite" -> "do this";
+"Huge blocker" -> "Something else";
+"Huge blocker" -> "Something";
+"Huge blocker" -> "[Person1] important stuff";
+"Huge blocker" -> "[Person2] important stuff";
+"Single thing to be done";
+}

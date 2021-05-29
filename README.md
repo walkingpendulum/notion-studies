@@ -20,5 +20,29 @@ There should be `config.json` file (will be ignored by git) with following conte
 ## How to use it
 `./main.py && open steps.png`
 
+## Output example
+Graph file in dot format ([original file](assets/steps.dot)):
+```dot
+digraph {
+    "Do something first" -> "Huge blocker";
+    "Last step\ntoward finish";
+    "Something" -> "Last step\ntoward finish";
+    "Something else" -> "Last step\ntoward finish";
+    "do this";
+    "[Person1] important stuff";
+    "[Person2] important stuff";
+    "Pre-requisite" -> "[Person2] important stuff";
+    "Pre-requisite" -> "[Person1] important stuff";
+    "Pre-requisite" -> "do this";
+    "Huge blocker" -> "Something else";
+    "Huge blocker" -> "Something";
+    "Huge blocker" -> "[Person1] important stuff";
+    "Huge blocker" -> "[Person2] important stuff";
+    "Single thing to be done";
+}
+```
+Rendered picture:
+![](assets/steps.png)
+
 ## External requirements
 - [dot executable](https://www.graphviz.org/download/#executable-packages) - part of graphviz package

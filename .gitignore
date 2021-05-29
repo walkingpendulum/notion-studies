@@ -2,3 +2,5 @@
 *.png
 config.json
 venv/
+!assets/*.png
+!assets/*.dot
