@@ -1,19 +1,30 @@
-from typing import Callable, Generator
+from typing import Callable, Generator, Optional
 
 from display import split_long_sentences
 
 
-def compose_graph_content(dependencies: dict, task_name: Callable[[str], str]) -> Generator[str, None, None]:
+def compose_graph_content(
+        dependencies: dict,
+        task_name: Callable[[str], str],
+        color: Callable[[str], Optional[str]],
+) -> Generator[str, None, None]:
     yield 'digraph {'
-    for task_id in dependencies:
-        if not dependencies[task_id]:
-            node = split_long_sentences(task_name(task_id))
-            yield f'"{node}";'
 
-        for dep_id in dependencies[task_id]:
-            node_from = split_long_sentences(task_name(task_id))
-            node_to = split_long_sentences(task_name(dep_id))
+    def repr_node(task_id: str) -> str:
+        modifiers = {
+            "color": f'{color(task_id)}' if color(task_id) else None,
+            "style": "filled",
+            "label": f'"{split_long_sentences(task_name(task_id))}"'
+        }
+        modifiers_ = ', '.join([f"{k}={v}" for k, v in modifiers.items() if v])
+        return f'"{task_id}" [{modifiers_}]'
 
-            yield f'"{node_from}" -> "{node_to}";'
+    all_nodes = sorted(set(dependencies) | set(dep_id for task_id in dependencies for dep_id in dependencies[task_id]))
+    for node_id in all_nodes:
+        yield f"{repr_node(node_id)};"
+
+    for task_id in sorted(dependencies):
+        for dep_id in sorted(dependencies[task_id]):
+            yield f'"{task_id}" -> "{dep_id}";'
 
     yield '}'

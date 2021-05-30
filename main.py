@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 import json
+from typing import Optional
 
 from display import render_dot
 from graphs import compose_graph_content
@@ -15,8 +16,12 @@ def read_config() -> dict:
         return json.load(f)
 
 
-def task_name(task_id, id_to_task):
+def task_name(task_id: str, id_to_task: dict) -> str:
     return id_to_task[task_id]['properties']['Projects']['title'][0]['plain_text']
+
+
+def status_color(task_id, id_to_task: dict) -> Optional[str]:
+    return id_to_task[task_id]['properties'].get("Status", {}).get("select", {}).get("color")
 
 
 if __name__ == '__main__':
@@ -33,5 +38,9 @@ if __name__ == '__main__':
     }
     output_picture_name = "steps.png"
 
-    dot_content = "\n".join(compose_graph_content(next_steps, task_name=lambda x: task_name(x, id_to_task=id_to_task)))
+    dot_content = "\n".join(compose_graph_content(
+        next_steps,
+        task_name=lambda x: task_name(x, id_to_task=id_to_task),
+        color=lambda x: status_color(x, id_to_task=id_to_task)
+    ))
     render_dot(content=dot_content, output_picture_name=output_picture_name)
