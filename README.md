@@ -21,7 +21,7 @@ There should be `config.json` file (will be ignored by git) with following conte
 `./main.py && open steps.png`
 
 ## Output example
-Graph file in dot format ([original file](assets/steps.dot)):
+Graph file is in dot format ([original file](assets/steps.dot)):
 ```dot
 digraph {
     "Do something first" -> "Huge blocker";
@@ -41,7 +41,7 @@ digraph {
     "Single thing to be done";
 }
 ```
-Rendered picture:
+Example of rendered picture:
 ![](assets/steps.png)
 
 ## External requirements
