@@ -1,0 +1,5 @@
+assets/
+venv/
+config.json
+*.png
+.gitignore
