@@ -12,8 +12,6 @@ from middleware import setup_middleware
 from render_state import setup_render_state
 from routes import setup_routes
 
-here = Path(__file__).resolve().parent / "static"
-
 
 def setup_logging(app: Application):
     logging.basicConfig()
@@ -22,12 +20,16 @@ def setup_logging(app: Application):
     logging.getLogger("app").setLevel(logging.INFO)
 
 
+def setup_jinja(app: Application):
+    here = Path(__file__).resolve().parent / "static"
+    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(here)))
+
+
 def make_app() -> Application:
     app = Application()
 
-    aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(str(here)))
-
     initializers = [
+        setup_jinja,
         setup_logging,
         setup_middleware,
         setup_routes,
