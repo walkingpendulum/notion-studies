@@ -2,7 +2,7 @@ import asyncio
 import datetime
 import logging
 import sys
-from asyncio.subprocess import PIPE, Process
+from asyncio.subprocess import Process
 from pathlib import Path
 from typing import Optional
 
@@ -31,7 +31,7 @@ class RenderState(object):
         return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     async def request_render(self):
-        self.process = await asyncio.create_subprocess_exec(*RenderState.command, stdout=PIPE, stderr=PIPE)
+        self.process = await asyncio.create_subprocess_exec(*RenderState.command)
 
     def get_render_status(self):
         return self.state
@@ -63,10 +63,6 @@ class RenderState(object):
             if rc != 0:
                 # process failed
                 self.state = RenderState.STATE_RENDER_FAILED
-
-                stderr_b = await self.process.stderr.read()
-                logger.error(f"{stderr_b.decode('ascii') if stderr_b else '<no stderr from process>'}")
-
                 self.process = None
 
                 await asyncio.sleep(1)
