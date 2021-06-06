@@ -42,8 +42,12 @@ def task_name(task_id: str, id_to_task: dict) -> str:
     return id_to_task[task_id]['properties']['Projects']['title'][0]['plain_text']
 
 
-def status_color(task_id, id_to_task: dict) -> Optional[str]:
+def status_color(task_id: str, id_to_task: dict) -> Optional[str]:
     return id_to_task[task_id]['properties'].get("Status", {}).get("select", {}).get("color")
+
+
+def task_url(task_id: str) -> str:
+    return f"https://www.notion.so/{task_id.replace('-', '')}"
 
 
 def run_cmd(command: List[str]):
@@ -93,7 +97,8 @@ def main(argv=None):
     dot_content = "\n".join(compose_graph_content(
         next_steps,
         task_name=lambda x: task_name(x, id_to_task=id_to_task),
-        color=lambda x: status_color(x, id_to_task=id_to_task)
+        color=lambda x: status_color(x, id_to_task=id_to_task),
+        url=task_url,
     ))
     render_dot(content=dot_content, output_picture_name=output_picture_name)
 
