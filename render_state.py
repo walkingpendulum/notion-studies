@@ -76,9 +76,13 @@ class RenderState(object):
 
     async def on_startup(self):
         asyncio.create_task(self._run_update_loop())
+        asyncio.create_task(self.configure_graphviz())
 
     async def on_cleanup(self):
         self.stop_update_loop = True
+
+    async def configure_graphviz(self):
+        await asyncio.create_subprocess_exec("dot", "-c")
 
 
 def get_render_state(app: Application) -> RenderState:
