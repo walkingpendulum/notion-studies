@@ -2,10 +2,12 @@
 import argparse
 import json
 import os
+import shlex
+import subprocess
+import tempfile
 from collections import ChainMap
-from typing import Optional
+from typing import Optional, List
 
-from display import render_dot
 from graphs import compose_graph_content
 from notion_api import fetch_tasks
 
@@ -42,6 +44,24 @@ def task_name(task_id: str, id_to_task: dict) -> str:
 
 def status_color(task_id, id_to_task: dict) -> Optional[str]:
     return id_to_task[task_id]['properties'].get("Status", {}).get("select", {}).get("color")
+
+
+def run_cmd(command: List[str]):
+    print(f"Execute: {' '.join(map(shlex.quote, command))}")
+    subprocess.run(command, check=True)
+
+
+def render_dot(content: str, output_picture_name: str) -> None:
+    with tempfile.NamedTemporaryFile(suffix=".dot", prefix="graph_", mode="w", delete=False) as temp_obj:
+        temp_obj.write(content)
+
+    try:
+        run_cmd(["dot", f"-Tpng", temp_obj.name, "-o", output_picture_name])
+    finally:
+        try:
+            os.unlink(temp_obj.name)
+        except Exception:
+            pass
 
 
 def make_parser() -> argparse.ArgumentParser:
