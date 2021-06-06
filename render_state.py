@@ -18,7 +18,7 @@ class RenderState(object):
     command = [
         sys.executable,
         str(Path(__file__).with_name("render_notion_dependencies.py").resolve()),
-        "--output", str(Path(__file__).resolve().parent / "static/rendered/steps.png"),
+        "--output", str(Path(__file__).resolve().parent / "static/rendered/steps.svg"),
     ]
 
     def __init__(self):
