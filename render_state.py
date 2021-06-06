@@ -75,6 +75,7 @@ class RenderState(object):
         logger.info("Render State update loop stopped")
 
     async def on_startup(self):
+        asyncio.create_task(self.request_render())
         asyncio.create_task(self._run_update_loop())
         asyncio.create_task(self.configure_graphviz())
 
