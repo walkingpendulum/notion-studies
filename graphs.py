@@ -16,7 +16,8 @@ def compose_graph_content(
             "color": f'{color(task_id)}' if color(task_id) else None,
             "style": "filled",
             "label": f'"{split_long_sentences(task_name(task_id))}"',
-            "URL": f'"{url(task_id)}"',
+            "URL": f'"{url(task_id)}"',     # attach url to node
+            "target": "_blank",             # open urls in new window
         }
         modifiers_ = ', '.join([f"{k}={v}" for k, v in modifiers.items() if v])
         return f'"{task_id}" [{modifiers_}]'
