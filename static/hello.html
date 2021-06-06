@@ -1,0 +1,15 @@
+<h2>
+    Render status: {{ app["render_state"].get_render_status() }}.
+    Last time updated at {{ app["render_state"].updated_at }}
+</h2>
+
+<form>
+    <div>
+        <input value="re-render graph" type="submit" formmethod="post" formaction="/render">
+    </div>
+    <div>
+        <input value="reload page" type="submit">
+    </div>
+</form>
+
+<img src="rendered/steps.png"/>
