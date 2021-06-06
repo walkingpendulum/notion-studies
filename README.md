@@ -62,17 +62,25 @@ Example of rendered picture:
 For convenience there is a Heroku-compatible web application that could be deployed and accessible from web.
 
 ## App configuration
+
 There should be few config variables set up:
+
 - `BASIC_AUTH_PASSWORD` will be used to restrict access to app via basic auth.
 - `BASIC_AUTH_USER` same as previous, will be used to restrict access to app via basic auth.
-- `DATABASE_ID` will be used for tasks scrapping. See `notion_token` configuration key in previous sections of this README.
-- `NOTION_TOKEN` will be used for tasks scrapping. See `database_id` configuration key in previous sections of this README.
+- `DATABASE_ID` will be used for tasks scrapping. See `notion_token` configuration key in previous sections of this
+  README.
+- `NOTION_TOKEN` will be used for tasks scrapping. See `database_id` configuration key in previous sections of this
+  README.
 
 ## App deployment configuration
-There should be the `heroku-community/apt` buildpack enabled. You could enable it in settings tab of Heroku dashboard: push button "Add buildback" and enter `heroku-community/apt`.
+
+There should be the `heroku-community/apt` buildpack enabled. You could enable it in settings tab of Heroku dashboard:
+push button "Add buildback" and enter `heroku-community/apt`.
 
 ## Local development
+
 Run following snippet and open http://localhost:8080
+
 ```bash
 export BASIC_AUTH_USER=user
 export BASIC_AUTH_PASSWORD=password
