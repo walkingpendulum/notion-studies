@@ -55,8 +55,12 @@ def render_dot(content: str, output_picture_name: str) -> None:
     with tempfile.NamedTemporaryFile(suffix=".dot", prefix="graph_", mode="w", delete=False) as temp_obj:
         temp_obj.write(content)
 
+    _, extension = os.path.splitext(output_picture_name)  # extension is like '.png'
+    extension = extension[1:]
+    print(f"Deduced extension is {extension}")
+
     try:
-        run_cmd(["dot", f"-Tpng", temp_obj.name, "-o", output_picture_name])
+        run_cmd(["dot", f"-T{extension}", temp_obj.name, "-o", output_picture_name])
     finally:
         try:
             os.unlink(temp_obj.name)
