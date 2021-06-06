@@ -17,8 +17,12 @@ DATABASE_ID = os.getenv("DATABASE_ID")
 
 def read_config_from_disk() -> dict:
     # keys: notion_token, database_id
-    with open("config.json") as f:
-        return json.load(f)
+    try:
+        with open("config.json") as f:
+            return json.load(f)
+    except FileNotFoundError as e:
+        print(f"Config file not found, skip loading from disk")
+        return {}
 
 
 def read_config_from_env() -> dict:
