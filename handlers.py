@@ -8,9 +8,9 @@ from render_state import get_render_state
 logger = logging.getLogger("app")
 
 
-@aiohttp_jinja2.template('hello.html')
+@aiohttp_jinja2.template('index.html')
 async def index_handler(request):
-    return {'name': 'Andrew'}
+    return {}
 
 
 async def render_graph(request: web.Request):
